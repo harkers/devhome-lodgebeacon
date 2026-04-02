@@ -1,6 +1,6 @@
 # LodgeBeacon Display - Quick Start
 
-**Alfreton Masonic Hall Digital Signage**
+**Premium Digital Signage for Masonic Halls**
 
 ---
 
@@ -9,24 +9,24 @@
 ### Step 1: Start the Server
 
 ```bash
-cd /home/stu/.openclaw/workspace/lodgebeacon-alfreton/display
-python3 -m http.server 8080
+cd /home/stu/lodgebeacon-display
+python3 -m http.server 18080
 ```
 
 ### Step 2: Open the Display
 
 In a browser, go to:
 ```
-http://localhost:8080
+http://localhost:18080
 ```
 
 Or open directly:
 ```bash
 # Linux
-firefox http://localhost:8080 &
+firefox http://localhost:18080 &
 
 # Mac
-open http://localhost:8080
+open http://localhost:18080
 ```
 
 ### Step 3: Full Screen
@@ -40,13 +40,36 @@ open http://localhost:8080
 
 Open in another tab/window:
 ```
-http://localhost:8080/admin.html
+http://localhost:18080/admin.html
 ```
 
 **Features:**
-- Send emergency messages
-- Clear emergencies
-- Open display window
+- 🎨 Theme selector (4 premium themes)
+- 🚨 Emergency message broadcasting
+- 👁️ Display preview
+- 📞 Support contact: stuharker@gmail.com
+
+---
+
+## 🎨 Changing Themes
+
+### Via Admin Panel
+1. Open admin panel at `http://localhost:18080/admin.html`
+2. Click on desired theme card:
+   - **Masonic Heritage** - Traditional navy and gold
+   - **Silicon Valley Slate** - Clean, professional
+   - **International Orange** - Bold, industrial
+   - **Cyber-Quartz** - Sophisticated, premium
+3. Changes apply immediately
+
+### Via Browser Console
+```javascript
+// Available themes: masonic, slate, industrial, quartz
+window.setDisplayTheme('slate');
+```
+
+### Persist Theme Choice
+Theme selection is saved to browser localStorage and persists across sessions.
 
 ---
 
@@ -54,11 +77,14 @@ http://localhost:8080/admin.html
 
 | Feature | Status | Description |
 |---------|--------|-------------|
-| Slide rotation | ✅ Working | Auto-rotates every 10 seconds |
-| Clock display | ✅ Working | Shows current time and date |
-| Emergency override | ✅ Working | Instant message broadcast |
-| Admin panel | ✅ Working | Simple web interface |
-| 5 sample slides | ✅ Working | Welcome, meetings, dining, visitors, contact |
+| **Slide rotation** | ✅ Working | Auto-rotates every 10 seconds |
+| **Clock display** | ✅ Working | Shows current time and date (bottom-right) |
+| **Emergency override** | ✅ Working | Instant red screen broadcast |
+| **Admin panel** | ✅ Working | Theme selector + emergency controls |
+| **Craft lodge pages** | ✅ Working | 5 individual lodge slides with meeting details |
+| **Masonic quotes** | ✅ Working | 10 quotes rotate randomly |
+| **Premium themes** | ✅ Working | 4 professionally designed themes |
+| **8-point grid spacing** | ✅ Working | Professional typography and layout |
 
 ---
 
@@ -75,13 +101,13 @@ http://localhost:8080/admin.html
 1. **Install Raspberry Pi OS Lite**
    ```bash
    # Download from https://www.raspberrypi.com/software/
-   # Flash to SD card
+   # Flash to SD card using Raspberry Pi Imager
    ```
 
 2. **Configure auto-login**
    ```bash
    sudo raspi-config
-   # System Options > Boot / Auto Login > Console Autologin
+   # System Options > Boot / Auto Login > Desktop Autologin
    ```
 
 3. **Install Chromium**
@@ -92,21 +118,21 @@ http://localhost:8080/admin.html
 
 4. **Create startup script**
    ```bash
-   cat > /home/pi/start-display.sh << 'EOF'
+   cat > /home/pi/start-lodgebeacon.sh << 'EOF'
    #!/bin/bash
    sleep 10
    export DISPLAY=:0
-   chromium-browser --kiosk --disable-infobars --disable-session-crashed-bubble http://your-server:8080
+   chromium-browser --kiosk --incognito --disable-session-crashed-bubble http://YOUR_SERVER_IP:18080
    EOF
-   chmod +x /home/pi/start-display.sh
+   chmod +x /home/pi/start-lodgebeacon.sh
    ```
 
 5. **Add to startup**
    ```bash
-   echo '@reboot /home/pi/start-display.sh' | crontab
+   echo '@reboot /home/pi/start-lodgebeacon.sh' | crontab
    ```
 
-6. **Reboot**
+6. **Reboot and test**
    ```bash
    sudo reboot
    ```
@@ -116,25 +142,46 @@ http://localhost:8080/admin.html
 ## 🚨 Using Emergency Messages
 
 ### From Admin Page
-1. Open `http://localhost:8080/admin.html`
-2. Type message in Emergency Message box
-3. Click "Send Emergency Message"
+1. Open `http://localhost:18080/admin.html`
+2. Type message in "Emergency Message" box
+3. Click **"Send Emergency Message"**
 4. All displays show red emergency screen immediately
 
-### From Browser Console
+### From Browser Console (on display)
 ```javascript
 // Trigger emergency
-triggerEmergency("Hall closed due to weather");
+window.triggerEmergency("Hall closed due to weather");
 
 // Clear emergency
-clearEmergencyManual();
+window.clearEmergencyManual();
 ```
+
+### How It Works
+- Emergency overlay appears instantly
+- Overrides all slide rotation
+- Red background with white text
+- Visible from any angle
+- Cleared via admin panel or console
 
 ---
 
-## ✏️ Customizing Slides
+## ✏️ Customizing Content
+
+### Change Slide Timing
 
 Edit `js/display.js`:
+
+```javascript
+const config = {
+    slideInterval: 10000, // 10 seconds per slide (adjust as needed)
+    emergencyCheckInterval: 5000,
+    showClock: true
+};
+```
+
+### Add/Edit Slides
+
+In `js/display.js`, modify the `slides` array:
 
 ```javascript
 const slides = [
@@ -143,11 +190,44 @@ const slides = [
         html: `
             <div class="slide">
                 <h1>Your Custom Title</h1>
-                <p>Your custom content</p>
+                <p style="font-size: 2rem;">Your custom content</p>
             </div>
         `
     },
     // Add more slides...
+];
+```
+
+### Customize Lodge Information
+
+Find the `craftLodges` array in `js/display.js`:
+
+```javascript
+const craftLodges = [
+    {
+        name: "Royal Alfred Lodge",
+        number: "1028",
+        warrant: "13th August 1864",
+        meetingDay: "First Monday",
+        meetingTime: "6:30pm",
+        nextMeeting: {
+            date: "7th April 2025",
+            business: "1st Degree",
+            time: "6:30pm"
+        }
+    },
+    // Edit other lodges...
+];
+```
+
+### Modify Quotes
+
+Find the `masonicQuotes` array in `js/display.js` and add/edit quotes:
+
+```javascript
+const masonicQuotes = [
+    "The badge of a Mason is not honour worn upon the breast, but honour carried faithfully in conduct.",
+    // Add your own quotes...
 ];
 ```
 
@@ -157,45 +237,96 @@ const slides = [
 
 | Issue | Solution |
 |-------|----------|
-| Display not loading | Check server is running on port 8080 |
-| Slides not rotating | Refresh browser |
-| Emergency not showing | Check admin page console for errors |
-| Clock not updating | Refresh browser |
-| Fullscreen not working | Press F11 manually |
+| Display not loading | Check server is running: `python3 -m http.server 18080` |
+| Blank screen | Check browser console for errors (F12) |
+| Slides not rotating | Refresh browser (Ctrl+R / Cmd+R) |
+| Emergency not showing | Check admin page localStorage matches display |
+| Clock not updating | Refresh browser; check JavaScript console |
+| Theme not changing | Ensure localStorage is enabled in browser |
+| Fonts not loading | Check internet connection (Google Fonts) |
+| Text too small/large | Adjust font sizes in `css/display-themes.css` |
 
 ---
 
-## 📁 Files
+## 📁 File Structure
 
 ```
-display/
-├── index.html       # Main display
-├── admin.html       # Admin interface
+lodgebeacon-display/
+├── index.html              # Main display page
+├── admin.html              # Admin control panel
+├── README.md               # Full documentation
+├── QUICKSTART.md           # This file
+├── FEATURES.md             # Planned features (P1 priority)
 ├── css/
-│   └── display.css  # Styles
-├── js/
-│   └── display.js   # Display logic
-└── README.md        # This file
+│   └── display-themes.css  # All theme definitions + base styles
+└── js/
+    └── display.js          # Display logic, content, quotes
 ```
 
 ---
 
-## 🎯 Next Steps
+## 🎯 Current Features (MVP 0.2)
 
-1. [ ] Customize slides for Alfreton Hall
-2. [ ] Add actual event data (manual or from calendar)
-3. [ ] Test on target display hardware
-4. [ ] Set up auto-start on Raspberry Pi
-5. [ ] Train hall staff on admin interface
+### Content
+- ✅ 13 slides total (welcome, history, lodges, facilities, etc.)
+- ✅ 5 individual Craft lodge pages with meeting schedules
+- ✅ 10 Masonic quotes (randomly interplaced)
+- ✅ Real-time clock and date display
+- ✅ Emergency override system
+
+### Design
+- ✅ 4 premium "Quiet Luxury" themes
+- ✅ Professional typography (tight headings, loose body text)
+- ✅ 8-point grid spacing system
+- ✅ Responsive layout for 55" TVs
+- ✅ High contrast for distance readability
+
+### Admin
+- ✅ Theme selector with visual previews
+- ✅ Emergency message broadcaster
+- ✅ Support contact information
+- ✅ LocalStorage-based persistence
 
 ---
 
 ## 📞 Support
 
-For technical issues, contact:
-- Hall Secretary: secretary@alfretonmasonichall.org.uk
+**Technical Contact:** stuharker@gmail.com  
+**Location:** Alfreton Masonic Hall, Derby Road, Alfreton, DE55 7AQ  
+**GitHub:** https://github.com/harkers/devhome-lodgebeacon  
 
 ---
 
-**Status:** MVP Ready for Testing  
-**Version:** 0.1
+## 🚀 Next Steps
+
+### Immediate
+1. [ ] Deploy on target display hardware
+2. [ ] Test all themes in production
+3. [ ] Train hall staff on admin panel
+4. [ ] Verify emergency system works
+
+### Phase 1 (Planned)
+See `FEATURES.md` for detailed specification:
+- [ ] Calendar integration (Google, Microsoft 365, ICS)
+- [ ] Scheduled display notices
+- [ ] Automatic event import
+- [ ] Manual message scheduling
+- [ ] Auto-expiry system
+- [ ] Preview mode
+
+---
+
+## 💡 Tips
+
+- **Use F11** for true fullscreen (hides browser UI)
+- **Disable screensaver** on display device
+- **Set brightness** appropriately for room lighting
+- **Test emergency system** regularly
+- **Keep admin URL bookmarked** for quick access
+- **Use wired ethernet** for reliability (not WiFi)
+
+---
+
+**Status:** Production Ready (MVP 0.2)  
+**Version:** 0.2  
+**Last Updated:** 2026-04-02
