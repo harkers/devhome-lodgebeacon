@@ -1,4 +1,4 @@
-# LodgeBeacon Display
+# Display Forge Display
 
 **Premium Digital Signage for Masonic Halls**
 
@@ -6,7 +6,7 @@
 
 ## Overview
 
-LodgeBeacon is a sophisticated digital signage system designed specifically for Masonic halls and lodges. It transforms any TV or display into an elegant noticeboard showing lodge information, meeting schedules, upcoming events, and important announcements.
+Display Forge is a sophisticated digital signage system designed specifically for Masonic halls and lodges. It transforms any TV or display into an elegant noticeboard showing lodge information, meeting schedules, upcoming events, and important announcements.
 
 **Current Deployment:** Alfreton Masonic Hall  
 **Version:** MVP 0.2  

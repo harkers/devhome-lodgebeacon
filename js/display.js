@@ -1,4 +1,4 @@
-// LodgeBeacon Display for Alfreton Hall
+// Display Forge Display for Alfreton Hall
 // Customized with real content from alfretonmasonichall.org.uk
 // Individual lodge pages with meeting schedules
 
@@ -236,7 +236,7 @@ let isEmergency = false;
 
 // Initialize
 function init() {
-    console.log('🏛️ LodgeBeacon Display initialized');
+    console.log('🏛️ Display Forge Display initialized');
     console.log('Hall:', config.hallName);
     console.log('Craft lodges:', craftLodges.length);
     

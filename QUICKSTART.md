@@ -1,4 +1,4 @@
-# LodgeBeacon Display - Quick Start
+# Display Forge Display - Quick Start
 
 **Premium Digital Signage for Masonic Halls**
 

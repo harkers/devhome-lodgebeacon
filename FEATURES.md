@@ -1,6 +1,6 @@
 # Feature Request: Scheduled Messages and Calendar-Driven Display Notices
 
-**Product:** LodgeBeacon // Display  
+**Product:** Display Forge // Display  
 **Status:** Draft  
 **Priority:** P1  
 **Author:** Stuart  
