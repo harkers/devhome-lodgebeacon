@@ -1,0 +1,336 @@
+/* LodgeBeacon Display Themes */
+/* Masonic Edition - Three theme options */
+
+/* ========== THEME 1: MASONIC HERITAGE (Default) ========== */
+/* Traditional Masonic navy and gold */
+:root[data-theme="masonic"],
+:root:not([data-theme]) {
+    /* Core Brand */
+    --bg-main: #0a1628;
+    --bg-card: #1a365d;
+    --text-main: #faf9f6;
+    --accent: #c9a227;
+    
+    /* UI Elements */
+    --border: #2d4a6f;
+    --muted: #94a3b8;
+    
+    /* Status */
+    --safe: #10b981;
+    --risk: #ef4444;
+    --warning: #f59e0b;
+}
+
+/* ========== THEME 2: SILICON VALLEY SLATE ========== */
+/* Clean, professional, high-trust institutional */
+:root[data-theme="slate"] {
+    /* Core Brand */
+    --bg-main: #f8fafc;
+    --bg-card: #ffffff;
+    --text-main: #0f172a;
+    --accent: #38bdf8;
+    
+    /* UI Elements */
+    --border: #e2e8f0;
+    --muted: #64748b;
+    
+    /* Status */
+    --safe: #10b981;
+    --risk: #ef4444;
+    --warning: #f59e0b;
+}
+
+/* ========== THEME 3: INTERNATIONAL ORANGE ========== */
+/* Bold, industrial, high-performance */
+:root[data-theme="industrial"] {
+    /* Core Brand */
+    --bg-main: #121212;
+    --bg-card: #1e1e1e;
+    --text-main: #ffffff;
+    --accent: #ff5f1f;
+    
+    /* UI Elements */
+    --border: #404040;
+    --muted: #a3a3a3;
+    
+    /* Status */
+    --safe: #22c55e;
+    --risk: #ff4444;
+    --warning: #ffaa00;
+}
+
+/* ========== THEME 4: CYBER-QUARTZ ========== */
+/* Sophisticated, premium, glass aesthetic */
+:root[data-theme="quartz"] {
+    /* Core Brand */
+    --bg-main: #0f0e17;
+    --bg-card: #1a1921;
+    --text-main: #e6e6e6;
+    --accent: #a78bfa;
+    
+    /* UI Elements */
+    --border: #2d2c35;
+    --muted: #94a3b8;
+    
+    /* Secondary accent for highlights */
+    --accent-secondary: #f472b6;
+    
+    /* Status */
+    --safe: #34d399;
+    --risk: #f87171;
+    --warning: #fbbf24;
+}
+
+/* ========== BASE STYLES ========== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Playfair Display', Georgia, serif;
+    background: var(--bg-main);
+    color: var(--text-main);
+    overflow: hidden;
+    height: 100vh;
+    width: 100vw;
+}
+
+/* ========== DISPLAY CONTAINER ========== */
+#display-container {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    background: linear-gradient(135deg, var(--bg-main) 0%, var(--bg-card) 100%);
+}
+
+/* ========== SLIDE CONTENT ========== */
+#slide-content {
+    width: 100%;
+    max-width: 1200px;
+    height: 80%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    transition: opacity 0.5s ease-in-out;
+}
+
+.slide {
+    width: 100%;
+    padding: 3rem;
+}
+
+.slide h1 {
+    font-size: 3rem;
+    margin-bottom: 2rem;
+    color: var(--text-main);
+    font-weight: 700;
+}
+
+.slide h2 {
+    font-size: 2.5rem;
+    margin-bottom: 1.5rem;
+    color: var(--accent);
+    font-weight: 600;
+}
+
+.slide p {
+    font-size: 1.5rem;
+    line-height: 1.6;
+    margin-bottom: 1rem;
+    color: var(--text-main);
+}
+
+.slide ul {
+    list-style: none;
+    text-align: left;
+    display: inline-block;
+    margin: 1rem 0;
+}
+
+.slide li {
+    font-size: 1.4rem;
+    margin-bottom: 0.8rem;
+    padding-left: 1.5rem;
+    position: relative;
+}
+
+.slide li:before {
+    content: "✦";
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+}
+
+/* ========== CLOCK OVERLAY ========== */
+#clock-overlay {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    text-align: right;
+    z-index: 100;
+}
+
+#clock {
+    font-size: 3rem;
+    font-weight: 700;
+    color: var(--accent);
+    font-family: 'Inter', sans-serif;
+}
+
+#date {
+    font-size: 1.2rem;
+    color: var(--muted);
+    margin-top: 0.5rem;
+    font-family: 'Inter', sans-serif;
+}
+
+/* ========== EMERGENCY OVERLAY ========== */
+#emergency-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(239, 68, 68, 0.95);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    transition: opacity 0.3s ease;
+}
+
+#emergency-overlay.hidden {
+    display: none;
+}
+
+.emergency-content {
+    text-align: center;
+    padding: 3rem;
+    color: white;
+}
+
+.emergency-content h1 {
+    font-size: 4rem;
+    margin-bottom: 2rem;
+}
+
+#emergency-message {
+    font-size: 2rem;
+    max-width: 800px;
+    line-height: 1.4;
+}
+
+/* ========== LODGE SLIDE STYLING ========== */
+.lodge-slide {
+    background: var(--bg-card);
+    border-radius: 20px;
+    padding: 3rem;
+    border: 2px solid var(--border);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+}
+
+.lodge-slide h2 {
+    font-size: 4rem;
+    color: var(--accent);
+    margin-bottom: 1rem;
+}
+
+.lodge-info {
+    background: rgba(201, 162, 39, 0.1);
+    border-left: 4px solid var(--accent);
+    padding: 1.5rem;
+    margin: 1.5rem 0;
+    text-align: left;
+}
+
+/* ========== THEME-SPECIFIC ADJUSTMENTS ========== */
+
+/* Light theme (Slate) adjustments */
+[data-theme="slate"] #display-container {
+    background: linear-gradient(135deg, var(--bg-main) 0%, #e2e8f0 100%);
+}
+
+[data-theme="slate"] .slide h1 {
+    color: var(--text-main);
+}
+
+[data-theme="slate"] .lodge-slide {
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+[data-theme="slate"] .lodge-info {
+    background: rgba(56, 189, 248, 0.1);
+}
+
+/* Industrial theme adjustments */
+[data-theme="industrial"] #display-container {
+    background: linear-gradient(135deg, #121212 0%, #2a2a2a 100%);
+}
+
+[data-theme="industrial"] .lodge-slide {
+    border-color: var(--accent);
+    box-shadow: 0 0 30px rgba(255, 95, 31, 0.3);
+}
+
+[data-theme="industrial"] .lodge-info {
+    background: rgba(255, 95, 31, 0.15);
+    border-left-color: var(--accent);
+}
+
+/* Quartz theme adjustments */
+[data-theme="quartz"] #display-container {
+    background: linear-gradient(135deg, #0f0e17 0%, #1e1d26 50%, #0f0e17 100%);
+}
+
+[data-theme="quartz"] .lodge-slide {
+    border-color: var(--accent);
+    background: rgba(167, 139, 250, 0.05);
+    backdrop-filter: blur(10px);
+}
+
+[data-theme="quartz"] .lodge-info {
+    background: rgba(167, 139, 250, 0.1);
+    border-left-color: var(--accent);
+}
+
+[data-theme="quartz"] #clock {
+    text-shadow: 0 0 20px var(--accent);
+}
+
+/* ========== ANIMATIONS ========== */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.slide {
+    animation: fadeIn 0.5s ease-out;
+}
+
+/* ========== RESPONSIVE ========== */
+@media (max-width: 768px) {
+    .slide h1 {
+        font-size: 2rem;
+    }
+    
+    .slide h2 {
+        font-size: 1.8rem;
+    }
+    
+    .slide p {
+        font-size: 1.2rem;
+    }
+    
+    #clock {
+        font-size: 2rem;
+    }
+}
+
+/* ========== FONT IMPORT ========== */
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@400;500;700&display=swap');

@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LodgeBeacon Admin - Alfreton Hall</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f5f5f5;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        h1 {
+            color: #1a365d;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            color: #666;
+            margin-bottom: 30px;
+        }
+        
+        .section {
+            margin-bottom: 30px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+        
+        .section h2 {
+            color: #1a365d;
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+        }
+        
+        button {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        
+        .btn-primary {
+            background: #1a365d;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: #2c5282;
+        }
+        
+        .btn-danger {
+            background: #dc2626;
+            color: white;
+        }
+        
+        .btn-danger:hover {
+            background: #b91c1c;
+        }
+        
+        .btn-secondary {
+            background: #e2e8f0;
+            color: #1a365d;
+        }
+        
+        .btn-secondary:hover {
+            background: #cbd5e0;
+        }
+        
+        textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+            margin-bottom: 10px;
+        }
+        
+        .status {
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+        
+        .status.success {
+            background: #d4edda;
+            color: #155724;
+        }
+        
+        .status.error {
+            background: #f8d7da;
+            color: #721c24;
+        }
+        
+        .info {
+            background: #e3f2fd;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        
+        .info p {
+            margin: 5px 0;
+            color: #1a365d;
+        }
+        
+        .theme-selector {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .theme-option {
+            padding: 15px;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+        }
+        
+        .theme-option:hover {
+            border-color: #1a365d;
+        }
+        
+        .theme-option.active {
+            border-color: #1a365d;
+            background: #f0f4f8;
+        }
+        
+        .theme-option h3 {
+            color: #1a365d;
+            font-size: 1.1rem;
+            margin-bottom: 5px;
+        }
+        
+        .theme-preview {
+            height: 40px;
+            border-radius: 4px;
+            margin: 10px 0;
+        }
+        
+        .theme-masonic .theme-preview {
+            background: linear-gradient(135deg, #0a1628 0%, #1a365d 100%);
+        }
+        
+        .theme-slate .theme-preview {
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+        }
+        
+        .theme-industrial .theme-preview {
+            background: linear-gradient(135deg, #121212 0%, #1e1e1e 100%);
+        }
+        
+        .theme-quartz .theme-preview {
+            background: linear-gradient(135deg, #0f0e17 0%, #1a1921 100%);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🏛️ LodgeBeacon Admin</h1>
+        <p class="subtitle">Alfreton Masonic Hall Display Control</p>
+        
+        <div class="info">
+            <p><strong>Display URL:</strong> <a href="index.html" target="_blank">http://192.168.10.80:18080</a></p>
+            <p><strong>Admin URL:</strong> <a href="admin.html" target="_blank">http://192.168.10.80:18080/admin.html</a></p>
+            <p><strong>Status:</strong> <span id="system-status">Active</span></p>
+            <p><strong>Support:</strong> <a href="mailto:stuharker@gmail.com">stuharker@gmail.com</a></p>
+        </div>
+        
+        <div class="section">
+            <h2>🎨 Display Theme</h2>
+            <p>Choose the visual theme for the display:</p>
+            <div class="theme-selector">
+                <div class="theme-option active" onclick="setTheme('masonic', this)">
+                    <h3>Masonic Heritage</h3>
+                    <div class="theme-preview theme-masonic"></div>
+                    <p>Traditional Masonic navy and gold</p>
+                </div>
+                
+                <div class="theme-option" onclick="setTheme('slate', this)">
+                    <h3>Silicon Valley Slate</h3>
+                    <div class="theme-preview theme-slate"></div>
+                    <p>Clean, professional, high-trust</p>
+                </div>
+                
+                <div class="theme-option" onclick="setTheme('industrial', this)">
+                    <h3>International Orange</h3>
+                    <div class="theme-preview theme-industrial"></div>
+                    <p>Bold, industrial, high-performance</p>
+                </div>
+                
+                <div class="theme-option" onclick="setTheme('quartz', this)">
+                    <h3>Cyber-Quartz</h3>
+                    <div class="theme-preview theme-quartz"></div>
+                    <p>Sophisticated, glass, premium</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="section">
+            <h2>🚨 Emergency Message</h2>
+            <p>Display an urgent message on all screens immediately:</p>
+            <textarea id="emergency-message" rows="3" placeholder="Enter emergency message here..."></textarea>
+            <div>
+                <button class="btn-danger" onclick="sendEmergency()">Send Emergency Message</button>
+                <button class="btn-secondary" onclick="clearEmergency()">Clear Emergency</button>
+            </div>
+        </div>
+        
+        <div class="section">
+            <h2>📺 Display Control</h2>
+            <button class="btn-primary" onclick="openDisplay()">Open Display in New Window</button>
+        </div>
+        
+        <div class="section">
+            <h2>ℹ️ About</h2>
+            <p><strong>Version:</strong> MVP 0.2</p>
+            <p><strong>Location:</strong> Alfreton Masonic Hall</p>
+            <p><strong>Last Updated:</strong> 2026-04-02</p>
+        </div>
+        
+        <div id="status-message"></div>
+    </div>
+
+    <script>
+        function setTheme(themeName, element) {
+            // Update active class
+            document.querySelectorAll('.theme-option').forEach(opt => {
+                opt.classList.remove('active');
+            });
+            element.classList.add('active');
+            
+            // Save to localStorage
+            localStorage.setItem('lodgebeacon_theme', themeName);
+            
+            // Update display
+            showStatus('Theme changed to: ' + themeName, 'success');
+            
+            // Send update to display
+            window.parent.postMessage({ type: 'theme', theme: themeName }, '*');
+        }
+        
+        function sendEmergency() {
+            const message = document.getElementById('emergency-message').value;
+            if (!message.trim()) {
+                showStatus('Please enter an emergency message', 'error');
+                return;
+            }
+            
+            const data = {
+                active: true,
+                message: message,
+                timestamp: Date.now()
+            };
+            
+            localStorage.setItem('lodgebeacon_emergency', JSON.stringify(data));
+            showStatus('Emergency message sent to all displays!', 'success');
+            document.getElementById('emergency-message').value = '';
+        }
+        
+        function clearEmergency() {
+            localStorage.removeItem('lodgebeacon_emergency');
+            showStatus('Emergency cleared from all displays', 'success');
+            document.getElementById('emergency-message').value = '';
+        }
+        
+        function openDisplay() {
+            window.open('index.html', '_blank', 'width=1920,height=1080');
+        }
+        
+        function showStatus(message, type) {
+            const statusDiv = document.getElementById('status-message');
+            statusDiv.className = 'status ' + type;
+            statusDiv.textContent = message;
+            
+            setTimeout(() => {
+                statusDiv.textContent = '';
+                statusDiv.className = '';
+            }, 3000);
+        }
+        
+        // Check for existing emergency on load
+        window.onload = function() {
+            const emergencyData = localStorage.getItem('lodgebeacon_emergency');
+            if (emergencyData) {
+                const data = JSON.parse(emergencyData);
+                if (data.active) {
+                    document.getElementById('emergency-message').value = data.message;
+                }
+            }
+            
+            // Load saved theme
+            const savedTheme = localStorage.getItem('lodgebeacon_theme');
+            if (savedTheme && savedTheme !== 'masonic') {
+                const themeElement = document.querySelector('.theme-option[onclick*="' + savedTheme + '"]');
+                if (themeElement) {
+                    themeElement.click();
+                }
+            }
+        };
+    </script>
+</body>
+</html>

@@ -1,0 +1,149 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Georgia', 'Times New Roman', serif;
+    background: #1a365d; /* Masonic blue */
+    color: #ffffff;
+    overflow: hidden;
+    height: 100vh;
+    width: 100vw;
+}
+
+#display-container {
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#slide-content {
+    width: 90%;
+    max-width: 1200px;
+    text-align: center;
+    padding: 40px;
+}
+
+/* Slide styles */
+.slide {
+    animation: fadeIn 1s ease-in;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.slide h1 {
+    font-size: 4rem;
+    margin-bottom: 2rem;
+    color: #c9a227; /* Gold */
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+}
+
+.slide h2 {
+    font-size: 2.5rem;
+    margin-bottom: 1.5rem;
+    color: #ffffff;
+}
+
+.slide p {
+    font-size: 1.8rem;
+    line-height: 1.6;
+    margin-bottom: 1rem;
+}
+
+.slide ul {
+    list-style: none;
+    font-size: 1.5rem;
+    text-align: left;
+    display: inline-block;
+}
+
+.slide li {
+    margin: 1rem 0;
+    padding-left: 2rem;
+    position: relative;
+}
+
+.slide li:before {
+    content: "▸";
+    color: #c9a227;
+    position: absolute;
+    left: 0;
+}
+
+/* Emergency overlay */
+#emergency-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: #dc2626;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+#emergency-overlay.hidden {
+    display: none;
+}
+
+.emergency-content {
+    text-align: center;
+    padding: 40px;
+}
+
+.emergency-content h1 {
+    font-size: 6rem;
+    margin-bottom: 3rem;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.7; }
+}
+
+.emergency-content p {
+    font-size: 3rem;
+    font-weight: bold;
+}
+
+/* Clock overlay */
+#clock-overlay {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    text-align: right;
+    z-index: 100;
+    background: rgba(0,0,0,0.5);
+    padding: 15px 25px;
+    border-radius: 10px;
+}
+
+#clock {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #c9a227;
+}
+
+#date {
+    font-size: 1.2rem;
+    color: #ffffff;
+    margin-top: 5px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .slide h1 { font-size: 2.5rem; }
+    .slide h2 { font-size: 1.8rem; }
+    .slide p { font-size: 1.2rem; }
+    #clock { font-size: 1.5rem; }
+}

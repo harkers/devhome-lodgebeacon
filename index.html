@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alfreton Masonic Hall - Display</title>
+    <!-- Theme CSS with multiple theme options -->
+    <link rel="stylesheet" href="css/display-themes.css">
+</head>
+<body>
+    <div id="display-container">
+        <!-- Slides will be loaded here -->
+        <div id="slide-content"></div>
+    </div>
+    
+    <!-- Emergency overlay (hidden by default) -->
+    <div id="emergency-overlay" class="hidden">
+        <div class="emergency-content">
+            <h1>⚠️ Important Notice</h1>
+            <p id="emergency-message"></p>
+        </div>
+    </div>
+    
+    <!-- Clock overlay -->
+    <div id="clock-overlay">
+        <div id="clock"></div>
+        <div id="date"></div>
+    </div>
+    
+    <!-- Theme indicator (small, bottom left) -->
+    <div id="theme-indicator" style="position: fixed; bottom: 2rem; left: 2rem; font-size: 0.8rem; color: var(--muted); z-index: 50; opacity: 0.5;">
+        <span id="current-theme">Masonic Heritage</span>
+    </div>
+
+    <script src="js/display.js"></script>
+    <script>
+        // Theme switcher function
+        window.setDisplayTheme = function(themeName) {
+            const body = document.body;
+            const indicator = document.getElementById('current-theme');
+            
+            // Remove any existing theme
+            body.removeAttribute('data-theme');
+            
+            // Apply new theme
+            if (themeName && themeName !== 'masonic') {
+                body.setAttribute('data-theme', themeName);
+            }
+            
+            // Update indicator
+            const themeLabels = {
+                'masonic': 'Masonic Heritage',
+                'slate': 'Silicon Valley Slate',
+                'industrial': 'International Orange',
+                'quartz': 'Cyber-Quartz'
+            };
+            
+            if (indicator) {
+                indicator.textContent = themeLabels[themeName] || themeLabels['masonic'];
+            }
+            
+            console.log('🎨 Theme changed to:', themeName || 'masonic');
+        };
+        
+        // Check for theme in localStorage on load
+        const savedTheme = localStorage.getItem('lodgebeacon_theme');
+        if (savedTheme) {
+            window.setDisplayTheme(savedTheme);
+        }
+    </script>
+</body>
+</html>
